@@ -1,6 +1,6 @@
 import React from "react";
 import CreateRooms from "../../components/CreateRooms";
-import RoomAll from "../../components/Rooms";
+import RoomAll from "../../components/RoomsAll";
 import SearchRooms from "../../components/SearchRooms";
 
 const Rooms = () => {
