@@ -1,6 +1,13 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 const WinOrLooser = () => {
+  const history = useHistory();
+
+  function handleSubmit() {
+    history.push("/rooms");
+  }
+
   return (
     <div
       className="
@@ -16,6 +23,7 @@ const WinOrLooser = () => {
           com 8 pontos!
         </p>
         <button
+          onClick={handleSubmit}
           className="
             py-3
             bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 
