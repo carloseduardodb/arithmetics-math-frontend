@@ -1,4 +1,5 @@
 import React from "react";
+import Status from "../../components/Status";
 
 const Game = () => {
   return (
@@ -10,30 +11,36 @@ const Game = () => {
       animate-gradient-xy
     "
     >
-      <div className="flex flex-row justify-center w-full relative">
-        <div className="flex flex-col items-center">
-          <div className="w-max bg-white rounded-lg p-5 my-6">
-            <p className="font-bold text-2xl">Pontuação</p>
-          </div>
-          <div className="w-max bg-white rounded-full py-5 px-8">
-            <p className="text-2xl">
-              <span>05</span> | <span>06</span>
-            </p>
+      <Status />
+
+      <div className="w-full h-full flex flex-col justify-around">
+        <div className="mt-12 flex flex-col justify-center items-center">
+          <p className="text-2xl text-white font-bold text-justify w-full max-w-sm">
+            Pergunta:
+          </p>
+          <div className="w-full max-w-sm bg-white m-5 p-5 rounded-md">
+            <p className="text-center text-4xl">5 + 2</p>
           </div>
         </div>
-
-        <div className="absolute right-0 mx-5 flex flex-col items-center">
-          <div className="w-full bg-white p-5 my-6 rounded-md">
-            <p className="font-bold text-lg">Partidas Restantes</p>
-          </div>
-          <div className="bg-white py-5 px-8 w-max text-2xl text-center rounded-full">
-            <p>09</p>
-          </div>
+        <div className="mt-12 flex flex-col justify-center items-center">
+          <form className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 rounded-md">
+            <input
+              className="w-full h-30 border-b-2 p-3 border-purple-600 focus:border-pink-500 outline-none"
+              placeholder="Digite sua resposta aqui"
+              type="number"
+            />
+            <button
+              className="
+                        bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 
+                      hover:from-indigo-800 hover:via-ping-500 px-5 rounded-lg 
+                      text-white ml-8
+              "
+            >
+              Enviar
+            </button>
+          </form>
         </div>
       </div>
-
-      <div className="w-full max-w-4xl bg-white m-5 p-10 rounded-md"></div>
-      <div className="w-full max-w-4xl bg-white m-5 p-10 rounded-md"></div>
     </div>
   );
 };
