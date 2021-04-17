@@ -77,7 +77,11 @@ const Game = () => {
       animate-gradient-xy
     "
     >
-      <Status remainingMatches={dataGame?.remaining_matches} />
+      <Status
+        myPontuation={dataGame?.point_owner}
+        adversaryPontuation={dataGame?.point_client}
+        remainingMatches={dataGame?.remaining_matches}
+      />
 
       <div className="w-full h-full flex flex-col justify-around">
         <div className="mt-12 flex flex-col justify-center items-center">

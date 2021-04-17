@@ -1,6 +1,10 @@
 import React from "react";
 
-const Status: React.FC<any> = ({ remainingMatches }) => {
+const Status: React.FC<any> = ({
+  remainingMatches,
+  myPontuation,
+  adversaryPontuation,
+}) => {
   return (
     <div className="flex flex-row justify-center w-full relative">
       <div className="flex flex-col items-center">
@@ -9,7 +13,8 @@ const Status: React.FC<any> = ({ remainingMatches }) => {
         </div>
         <div className="w-max bg-white rounded-full py-3 px-8">
           <p className="text-2xl">
-            <span>05</span> | <span>06</span>
+            <span>{myPontuation && myPontuation}</span> |{" "}
+            <span>{adversaryPontuation && adversaryPontuation}</span>
           </p>
         </div>
       </div>
