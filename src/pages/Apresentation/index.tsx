@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { socket } from "../../service/socket";
 
 const Apresentation = () => {
   const history = useHistory();
+  const [name, setName] = useState("");
 
   function handleSubmit() {
-    history.push("rooms");
+    socket.emit("sendUser", { name: name });
   }
+
+  socket.onAny((eventName, ...args) => {
+    if (eventName === "user_status") {
+      history.push("/rooms");
+      socket.disconnect();
+    }
+  });
 
   return (
     <div
@@ -23,6 +32,10 @@ const Apresentation = () => {
         </h2>
         <input
           type="text"
+          value={name}
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
           className="p-4 rounded-md border-2 focus:border-indigo-800 outline-none"
           placeholder="Seu nome"
         />

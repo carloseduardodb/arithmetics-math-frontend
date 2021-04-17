@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CreateRooms from "../../components/CreateRooms";
 import RoomAll from "../../components/RoomsAll";
 import SearchRooms from "../../components/SearchRooms";
+import { socket } from "../../service/socket";
 
 const Rooms = () => {
-  //responsability all events page
+  const [allRooms, setAllRooms] = useState("");
+  useEffect(() => {
+    try {
+      socket.on("rooms", (data) => {
+        //aqui ta recebendo
+        setAllRooms(JSON.stringify(data));
+      });
+    } catch (error) {
+      console.log("error");
+    }
+  }, []);
+
   return (
     <div
       className="
@@ -17,7 +29,7 @@ const Rooms = () => {
       <div className="w-full max-w-4xl bg-white m-5 p-10 rounded-md">
         <CreateRooms />
         <SearchRooms />
-        <RoomAll />
+        <RoomAll rooms={allRooms} />
       </div>
     </div>
   );
