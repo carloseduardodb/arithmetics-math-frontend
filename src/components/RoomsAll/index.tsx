@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { socket } from "../../service/socket";
 
 interface Room {
   id: number;
@@ -10,6 +11,7 @@ interface Room {
 
 const RoomAll: React.FC<any> = ({ rooms = "" }) => {
   const [allRooms, setAllRooms] = useState<Room[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     if (rooms !== "" || rooms.legth === 0) {
@@ -17,6 +19,11 @@ const RoomAll: React.FC<any> = ({ rooms = "" }) => {
       setAllRooms(rooms);
     }
   }, [rooms]);
+
+  function enterRoom(id: number) {
+    socket.emit("enterRoom", { id: id });
+    history.push("game");
+  }
 
   return (
     <div>
@@ -26,8 +33,11 @@ const RoomAll: React.FC<any> = ({ rooms = "" }) => {
       <ul className="grid grid-flow-row grid-cols-2 gap-4 w-full">
         {allRooms.map((room) => (
           <li key={room.id} className="w-full">
-            <Link className="inline-block w-full" to="check">
-              <button
+            <button
+              className="inline-block w-full"
+              onClick={() => enterRoom(room.id)}
+            >
+              <div
                 className="
             hover:bg-gradient-to-br hover:from-purple-600 hover:via-blue-700 transition-all hover:to-purple-900
             bg-gradient-to-tl from-purple-600 via-purple-700 to-purple-900 
@@ -36,8 +46,8 @@ const RoomAll: React.FC<any> = ({ rooms = "" }) => {
             "
               >
                 {room.name}
-              </button>
-            </Link>
+              </div>
+            </button>
           </li>
         ))}
       </ul>

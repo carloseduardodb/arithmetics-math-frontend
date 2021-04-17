@@ -12,7 +12,7 @@ const Apresentation = () => {
 
   socket.onAny((eventName, ...args) => {
     if (eventName === "user_status") {
-      history.push("/rooms");
+      history.push("rooms");
       socket.disconnect();
     }
   });

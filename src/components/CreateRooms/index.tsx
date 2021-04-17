@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import { socket } from "../../service/socket";
 
 const CreateRooms = () => {
   const [room, setRoom] = useState("");
+  const history = useHistory();
 
   function handleCreateRoom() {
     socket.emit("sendRoom", { name: room });
+    history.push("check");
   }
 
   return (

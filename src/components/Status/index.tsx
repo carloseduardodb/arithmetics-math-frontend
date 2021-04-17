@@ -1,6 +1,6 @@
 import React from "react";
 
-const Status = () => {
+const Status: React.FC<any> = ({ remainingMatches }) => {
   return (
     <div className="flex flex-row justify-center w-full relative">
       <div className="flex flex-col items-center">
@@ -19,7 +19,7 @@ const Status = () => {
           <p className="font-bold text-lg">Partidas Restantes</p>
         </div>
         <div className="bg-white py-3 px-8 w-max text-2xl text-center rounded-full">
-          <p>09</p>
+          <p>{remainingMatches && remainingMatches}</p>
         </div>
       </div>
     </div>
