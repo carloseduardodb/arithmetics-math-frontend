@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { socket } from "../../service/socket";
 
-const Apresentation = () => {
+const Name = () => {
   const history = useHistory();
   const [name, setName] = useState("");
 
@@ -12,7 +12,7 @@ const Apresentation = () => {
 
   socket.onAny((eventName, ...args) => {
     if (eventName === "user_status") {
-      history.push("rooms");
+      history.push("battle");
       socket.disconnect();
     }
   });
@@ -28,7 +28,7 @@ const Apresentation = () => {
     >
       <div className="flex flex-col space-y-3 md:w-4/12 sm:w-auto">
         <h2 className="lg:text-5xl md:text-3xl text-center font-bold text-white my-16">
-          Bem Vindo!
+          Digite seu nome para entra na batalha!
         </h2>
         <input
           type="text"
@@ -50,4 +50,4 @@ const Apresentation = () => {
   );
 };
 
-export default Apresentation;
+export default Name;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CreateRooms from "../../components/CreateRooms";
 import RoomAll from "../../components/RoomsAll";
-import SearchRooms from "../../components/SearchRooms";
 import { socket } from "../../service/socket";
 
 const Rooms = () => {
@@ -28,7 +27,6 @@ const Rooms = () => {
     >
       <div className="w-full max-w-4xl bg-white m-5 p-10 rounded-md">
         <CreateRooms />
-        <SearchRooms />
         <RoomAll rooms={allRooms} />
       </div>
     </div>

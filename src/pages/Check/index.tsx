@@ -30,9 +30,6 @@ const Check = () => {
       <h3 className="my-16 text-white text-2xl">
         Assim que seu amigo entrar a gente começa ....
       </h3>
-      <h1 className="text-white font-bold text-2xl">
-        Nome da sala: {roomName}
-      </h1>
       <div className="w-full max-w-4xl bg-white m-5 p-10 rounded-md text-center">
         <p>
           Não há como jogar sozinho ainda, chame um amigo e peça para ele entrar

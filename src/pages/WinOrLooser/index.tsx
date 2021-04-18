@@ -6,7 +6,7 @@ const WinOrLooser = () => {
   const statusGame = window.location.href.split("/");
 
   function handleSubmit() {
-    history.push("/rooms");
+    window.location.href = "/";
   }
 
   return (
@@ -21,8 +21,7 @@ const WinOrLooser = () => {
       <div className="text-center bg-white p-5 rounded-lg shadow-2xl">
         {statusGame[4] === "win" && (
           <p className="text-gray-800 font-bold text-2xl my-10">
-            Parabéns Você Ganhou <br />
-            com {statusGame[5]} pontos!
+            Parabéns Você Ganhou!
           </p>
         )}
         {statusGame[4] === "loser" && (
