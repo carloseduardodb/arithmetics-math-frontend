@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Status from "../../components/Status";
 import { socket } from "../../service/socket";
 
@@ -14,6 +15,8 @@ interface dataValues {
 
 const Game = () => {
   const [dataGame, setDataGame] = useState<dataValues>();
+  const [answer, setAnswer] = useState("");
+  const history = useHistory();
 
   function operationConvert(operator: string | any) {
     switch (operator) {
@@ -25,6 +28,28 @@ const Game = () => {
         return "erro";
     }
   }
+
+  function handleSendResponse() {
+    socket.emit("play", {
+      response: answer,
+      first_value: dataGame?.first_value,
+      last_value: dataGame?.last_value,
+      calcType: dataGame?.operator,
+    });
+    setAnswer("");
+  }
+
+  useEffect(() => {
+    try {
+      socket.on("status", (data) => {
+        if (data.game === "win" || data.game === "loser") {
+          history.push("finish/" + data.game);
+        }
+      });
+    } catch (error) {
+      console.log("error");
+    } // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     try {
@@ -96,8 +121,12 @@ const Game = () => {
           </div>
         </div>
         <div className="mt-12 flex flex-col justify-center items-center">
-          <form className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 rounded-md">
+          <div className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 rounded-md">
             <input
+              value={answer}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setAnswer(e.target.value);
+              }}
               className="w-full h-30 border-b-2 p-3 border-purple-600 focus:border-pink-500 outline-none"
               placeholder="Digite sua resposta aqui"
               type="number"
@@ -108,10 +137,11 @@ const Game = () => {
                       hover:from-indigo-800 hover:via-ping-500 px-5 rounded-lg 
                       text-white ml-8
               "
+              onClick={handleSendResponse}
             >
               Enviar
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 const WinOrLooser = () => {
   const history = useHistory();
+  const statusGame = window.location.href.split("/");
 
   function handleSubmit() {
     history.push("/rooms");
@@ -18,10 +19,17 @@ const WinOrLooser = () => {
   "
     >
       <div className="text-center bg-white p-5 rounded-lg shadow-2xl">
-        <p className="text-gray-800 font-bold text-2xl my-10">
-          Parabéns Você Ganhou <br />
-          com 8 pontos!
-        </p>
+        {statusGame[4] === "win" && (
+          <p className="text-gray-800 font-bold text-2xl my-10">
+            Parabéns Você Ganhou <br />
+            com {statusGame[5]} pontos!
+          </p>
+        )}
+        {statusGame[4] === "loser" && (
+          <p className="text-gray-800 font-bold text-2xl my-10">
+            Continue tentando <br />a prática leva a perfeição!
+          </p>
+        )}
         <button
           onClick={handleSubmit}
           className="

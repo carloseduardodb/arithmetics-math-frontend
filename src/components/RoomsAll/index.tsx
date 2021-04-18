@@ -7,6 +7,7 @@ interface Room {
   name: string;
   number_players: number;
   room_owner: string;
+  room_client: string;
 }
 
 const RoomAll: React.FC<any> = ({ rooms = "" }) => {
@@ -15,6 +16,7 @@ const RoomAll: React.FC<any> = ({ rooms = "" }) => {
 
   useEffect(() => {
     if (rooms !== "" || rooms.legth === 0) {
+      // eslint-disable-next-line
       rooms = JSON.parse(rooms);
       setAllRooms(rooms);
     }
@@ -31,25 +33,29 @@ const RoomAll: React.FC<any> = ({ rooms = "" }) => {
         Salas ativas:
       </h2>
       <ul className="grid grid-flow-row grid-cols-2 gap-4 w-full">
-        {allRooms.map((room) => (
-          <li key={room.id} className="w-full">
-            <button
-              className="inline-block w-full"
-              onClick={() => enterRoom(room.id)}
-            >
-              <div
-                className="
+        {allRooms.map((room) => {
+          return (
+            room.room_client === "" && (
+              <li key={room.id} className="w-full">
+                <button
+                  className="inline-block w-full"
+                  onClick={() => enterRoom(room.id)}
+                >
+                  <div
+                    className="
             hover:bg-gradient-to-br hover:from-purple-600 hover:via-blue-700 transition-all hover:to-purple-900
             bg-gradient-to-tl from-purple-600 via-purple-700 to-purple-900 
             p-5 rounded-md text-white font-semibold w-full
             shadow-1xl
             "
-              >
-                {room.name}
-              </div>
-            </button>
-          </li>
-        ))}
+                  >
+                    {room.name}
+                  </div>
+                </button>
+              </li>
+            )
+          );
+        })}
       </ul>
     </div>
   );
