@@ -1,8 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 const WinOrLooser = () => {
-  const history = useHistory();
   const statusGame = window.location.href.split("/");
 
   function handleSubmit() {

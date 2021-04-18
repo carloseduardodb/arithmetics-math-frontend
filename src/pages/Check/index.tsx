@@ -4,12 +4,10 @@ import { socket } from "../../service/socket";
 
 const Check = () => {
   const history = useHistory();
-  const [roomName, setRoomName] = useState("");
   useEffect(() => {
     try {
       socket.on("room", (data) => {
         const room = JSON.parse(JSON.stringify(data));
-        setRoomName(room.name);
         if (room.room_client !== "") {
           history.push("game");
         }
