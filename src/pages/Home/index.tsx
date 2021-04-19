@@ -17,17 +17,15 @@ const Home = () => {
         <h2 className="lg:text-5xl md:text-3xl text-center font-bold text-white my-16">
           Escolha um modo:
         </h2>
-        <button
-          onClick={() => {
-            window.location.href = "/your-name";
-          }}
+        <Link
+          to="/your-name"
           className="bg-indigo-900 flex flex-row justify-between 
         items-center hover:bg-black transition-all text-white font-bold 
         py-3 px-10 rounded shadow-lg text-center
         "
         >
           <p className="text-2xl">BATALHA</p> <FaBattleNet size={50} />
-        </button>
+        </Link>
         <Link
           to="/duel"
           className="bg-pink-800 flex flex-row justify-between 
