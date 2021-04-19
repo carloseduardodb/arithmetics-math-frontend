@@ -4,18 +4,17 @@ import { socket } from "../../service/socket";
 
 const Name = () => {
   const history = useHistory();
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Teste");
 
   function handleSubmit() {
-    socket.emit("sendUser", { name: name });
+    socket.emit("createUser", { name: name });
+    socket.on("battle-" + socket.id, (data) => {
+      if (data.status) {
+        history.push("battle");
+        socket.off();
+      }
+    });
   }
-
-  socket.onAny((eventName, ...args) => {
-    if (eventName === "user_status") {
-      history.push("battle");
-      socket.disconnect();
-    }
-  });
 
   return (
     <div
@@ -40,7 +39,9 @@ const Name = () => {
           placeholder="Seu nome"
         />
         <button
-          onClick={handleSubmit}
+          onClick={() => {
+            handleSubmit();
+          }}
           className="bg-gray-800 hover:bg-black transition-all text-white font-bold py-3 px-4 rounded shadow-lg text-center"
         >
           ENTRAR

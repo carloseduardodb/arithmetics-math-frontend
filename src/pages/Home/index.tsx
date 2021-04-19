@@ -20,7 +20,7 @@ const Home = () => {
         </h2>
         <button
           onClick={() => {
-            history.push("/battle");
+            window.location.href = "/your-name";
           }}
           className="bg-indigo-900 flex flex-row justify-between 
         items-center hover:bg-black transition-all text-white font-bold 
@@ -31,7 +31,7 @@ const Home = () => {
         </button>
         <button
           onClick={() => {
-            history.push("/duel");
+            window.location.href = "/duel";
           }}
           className="bg-pink-800 flex flex-row justify-between 
         items-center hover:bg-black transition-all text-white font-bold 

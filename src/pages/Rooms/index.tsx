@@ -8,7 +8,6 @@ const Rooms = () => {
   useEffect(() => {
     try {
       socket.on("rooms", (data) => {
-        //aqui ta recebendo
         setAllRooms(JSON.stringify(data));
       });
     } catch (error) {
