@@ -1,63 +1,51 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "../../service/socket";
 
-interface dataValues {
-  room_id: number;
+interface BattleData {
   operator: string;
   first_value: number;
   last_value: number;
-  remaining_matches: number;
-  point_client: number;
-  point_owner: number;
+}
+
+interface Ranking {
+  name: string;
+  points: number;
 }
 
 const Battle = () => {
-  const [dataGame, setDataGame] = useState<dataValues>();
-  const [globalGameValues, setGlobalGameValues] = useState<dataValues>();
-  const [users, setUsers] = useState<dataValues>();
+  const [globalGameValues, setGlobalGameValues] = useState<BattleData>();
+  const [globalRankingValues, setGlobalRankingValues] = useState<Ranking[]>([]);
 
-  useEffect(() => {
-    try {
-      socket.on("game", (data) => {
-        const game = {
-          room_id: data.room_id,
-          operator: data.operator,
-          first_value: data.first_value,
-          last_value: data.last_value,
-          remaining_matches: data.remaining_matches,
-          point_client: data.point_client,
-          point_owner: data.point_owner,
-        };
-        const {
-          room_id,
-          operator,
-          first_value,
-          last_value,
-          remaining_matches,
-          point_client,
-          point_owner,
-        } = game;
-
-        setDataGame({
-          room_id: room_id,
-          operator: operator,
-          first_value: first_value,
-          last_value: last_value,
-          remaining_matches: remaining_matches,
-          point_client: point_client,
-          point_owner: point_owner,
-        });
-
-        console.log(room_id);
-        //aqui ta recebendo
-        //setAllRooms(JSON.stringify(data));
-        console.log(game);
-      });
-    } catch (error) {
-      console.log("error");
+  function operationConvert(operator: string | any) {
+    switch (operator) {
+      case "sum":
+        return "+";
+      case "subtraction":
+        return "-";
+      default:
+        return "erro";
     }
+  }
+  useEffect(() => {
+    socket.emit("getBattle", () => {});
+    socket.on("battle", (data) => {
+      const battles = {
+        operator: operationConvert(data.operator),
+        first_value: data.first_value,
+        last_value: data.last_value,
+      };
+      setGlobalGameValues(battles);
+    });
   }, []);
 
+  useEffect(() => {
+    socket.emit("getRanking", () => {});
+    socket.on("ranking", (data) => {
+      setGlobalRankingValues(data);
+    });
+  }, []);
+
+  console.log(globalRankingValues);
   return (
     <div
       className="
@@ -70,10 +58,12 @@ const Battle = () => {
       <div className="flex flex-col justify-center items-center bg-white absolute right-0 p-5 w-full max-w-sm rounded-md overflow-y-scroll m-2">
         <p className="text-indigo-600 font-bold text-lg">Últimas pontuações</p>
         <ul style={{ maxHeight: "50vh" }} className="w-full">
-          <li className="flex flex-row justify-between py-2 px-4 bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 rounded-md text-white my-3 shadow-2xl">
-            <p>Carlos Eduardo</p>
-            <p>50</p>
-          </li>
+          {globalRankingValues.map((node) => (
+            <li className="flex flex-row justify-between py-2 px-4 bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 rounded-md text-white my-3 shadow-2xl">
+              <p>{node.name}</p>
+              <p>{node.points}</p>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="w-full h-full flex flex-col justify-around">
@@ -82,7 +72,10 @@ const Battle = () => {
             Pergunta:
           </p>
           <div className="w-full max-w-sm bg-white m-5 p-5 rounded-md">
-            <p className="text-center text-4xl">5 + 8</p>
+            <p className="text-center text-4xl">
+              {globalGameValues?.first_value} {globalGameValues?.operator}{" "}
+              {globalGameValues?.last_value}
+            </p>
           </div>
         </div>
         <div className="mt-12 flex flex-col justify-center items-center">
