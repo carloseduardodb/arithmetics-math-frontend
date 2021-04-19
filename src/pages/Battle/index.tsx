@@ -15,6 +15,7 @@ interface Ranking {
 const Battle = () => {
   const [globalGameValues, setGlobalGameValues] = useState<BattleData>();
   const [globalRankingValues, setGlobalRankingValues] = useState<Ranking[]>([]);
+  const [answer, setAnswer] = useState("");
 
   function operationConvert(operator: string | any) {
     switch (operator) {
@@ -30,7 +31,7 @@ const Battle = () => {
     socket.emit("getBattle", () => {});
     socket.on("battle", (data) => {
       const battles = {
-        operator: operationConvert(data.operator),
+        operator: data.operator,
         first_value: data.first_value,
         last_value: data.last_value,
       };
@@ -45,7 +46,20 @@ const Battle = () => {
     });
   }, []);
 
-  console.log(globalRankingValues);
+  function handleSendResponse() {
+    socket.emit("playBattle", {
+      response: answer,
+      first_value: globalGameValues?.first_value,
+      last_value: globalGameValues?.last_value,
+      calcType: globalGameValues?.operator,
+    });
+    setAnswer("");
+    socket.emit("getRanking", () => {});
+    socket.on("ranking", (data) => {
+      setGlobalRankingValues(data);
+    });
+  }
+
   return (
     <div
       className="
@@ -73,7 +87,8 @@ const Battle = () => {
           </p>
           <div className="w-full max-w-sm bg-white m-5 p-5 rounded-md">
             <p className="text-center text-4xl">
-              {globalGameValues?.first_value} {globalGameValues?.operator}{" "}
+              {globalGameValues?.first_value}{" "}
+              {operationConvert(globalGameValues?.operator)}{" "}
               {globalGameValues?.last_value}
             </p>
           </div>
@@ -81,8 +96,10 @@ const Battle = () => {
         <div className="mt-12 flex flex-col justify-center items-center">
           <div className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 rounded-md">
             <input
-              value={""}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+              value={answer}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setAnswer(e.currentTarget.value);
+              }}
               className="w-full h-30 border-b-2 p-3 border-purple-600 focus:border-pink-500 outline-none"
               placeholder="Digite sua resposta aqui"
               type="number"
@@ -93,7 +110,9 @@ const Battle = () => {
                       hover:from-indigo-800 hover:via-ping-500 px-5 rounded-lg 
                       text-white ml-8
               "
-              onClick={() => {}}
+              onClick={() => {
+                handleSendResponse();
+              }}
             >
               Enviar
             </button>
