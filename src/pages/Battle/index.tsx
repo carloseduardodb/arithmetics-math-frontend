@@ -72,8 +72,11 @@ const Battle = () => {
       <div className="flex flex-col justify-center items-center bg-white absolute right-0 p-5 w-full max-w-sm rounded-md overflow-y-scroll m-2">
         <p className="text-indigo-600 font-bold text-lg">Últimas pontuações</p>
         <ul style={{ maxHeight: "50vh" }} className="w-full">
-          {globalRankingValues.map((node) => (
-            <li className="flex flex-row justify-between py-2 px-4 bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 rounded-md text-white my-3 shadow-2xl">
+          {globalRankingValues.map((node, index) => (
+            <li
+              key={index}
+              className="flex flex-row justify-between py-2 px-4 bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 rounded-md text-white my-3 shadow-2xl"
+            >
               <p>{node.name}</p>
               <p>{node.points}</p>
             </li>

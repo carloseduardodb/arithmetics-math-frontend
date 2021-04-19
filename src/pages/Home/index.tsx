@@ -1,10 +1,9 @@
 import React from "react";
 import { FaBattleNet } from "react-icons/fa";
 import { GiPlainDagger } from "react-icons/gi";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const history = useHistory();
   return (
     <div
       className="
@@ -29,16 +28,14 @@ const Home = () => {
         >
           <p className="text-2xl">BATALHA</p> <FaBattleNet size={50} />
         </button>
-        <button
-          onClick={() => {
-            window.location.href = "/duel";
-          }}
+        <Link
+          to="/duel"
           className="bg-pink-800 flex flex-row justify-between 
         items-center hover:bg-black transition-all text-white font-bold 
         py-3 px-10 rounded shadow-lg text-center"
         >
           <p className="text-2xl">DUELO</p> <GiPlainDagger size={50} />
-        </button>
+        </Link>
       </div>
     </div>
   );

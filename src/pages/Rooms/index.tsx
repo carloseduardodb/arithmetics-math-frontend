@@ -5,14 +5,12 @@ import { socket } from "../../service/socket";
 
 const Rooms = () => {
   const [allRooms, setAllRooms] = useState("");
+
   useEffect(() => {
-    try {
-      socket.on("rooms", (data) => {
-        setAllRooms(JSON.stringify(data));
-      });
-    } catch (error) {
-      console.log("error");
-    }
+    socket.emit("getRooms", () => {});
+    socket.on("rooms", (data) => {
+      setAllRooms(JSON.stringify(data));
+    });
   }, []);
 
   return (
