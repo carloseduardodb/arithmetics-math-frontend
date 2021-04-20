@@ -4,7 +4,7 @@ import { socket } from "../../service/socket";
 
 const Name = () => {
   const history = useHistory();
-  const [name, setName] = useState("Teste");
+  const [name, setName] = useState("");
 
   function handleSubmit() {
     socket.emit("createUser", { name: name });
