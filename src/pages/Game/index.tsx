@@ -96,10 +96,10 @@ const Game = () => {
   return (
     <div
       className="
-      w-full h-screen 
+      w-full md:h-screen xs:min-h-screen
       bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800
       flex flex-col items-center
-      animate-gradient-xy
+      animate-gradient-xy relative
     "
     >
       <Status
@@ -120,7 +120,7 @@ const Game = () => {
             </p>
           </div>
         </div>
-        <div className="mt-12 flex flex-col justify-center items-center xs:mx-5">
+        <div className="mt-12 flex flex-col justify-center items-center xs:mx-2">
           <div className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 xs:p-4 rounded-md">
             <input
               value={answer}

@@ -66,7 +66,7 @@ const Battle = () => {
   return (
     <div
       className="
-      w-full h-screen 
+      w-full md:h-screen xs:min-h-screen
       bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800
       flex flex-col items-center
       animate-gradient-xy relative
@@ -79,7 +79,8 @@ const Battle = () => {
           }}
           className={
             "bg-gray-800 flex flex-row-reverse " +
-            (pontuation && "xs:mt-14 md:mt-0") +
+            (pontuation &&
+              "xs:mt-14 md:mt-0 xs:opacity-50 md:relative xs:absolute") +
             " hover:bg-black transition-all text-white font-bold py-3 px-4 rounded shadow-lg text-center"
           }
         >
@@ -114,28 +115,26 @@ const Battle = () => {
           <p className="text-2xl text-white font-bold text-justify w-full max-w-sm">
             Pergunta:
           </p>
-          <div className="w-full max-w-sm bg-white m-5 p-5 rounded-md">
-            <p className="text-center text-4xl">
-              {globalGameValues?.first_value}{" "}
-              {operationConvert(globalGameValues?.operator)}{" "}
-              {globalGameValues?.last_value}
-            </p>
-          </div>
+          <p className="text-center text-4xl sticky w-full max-w-sm bg-white m-5 p-5 rounded-md">
+            {globalGameValues?.first_value}{" "}
+            {operationConvert(globalGameValues?.operator)}{" "}
+            {globalGameValues?.last_value}
+          </p>
         </div>
-        <div className="mt-12 flex flex-col justify-center items-center xs:mx-5">
-          <div className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 xs:p-4 rounded-md">
+        <div className="mt-12 flex flex-col justify-center items-center xs:mx-2">
+          <div className="w-full flex flex-row max-w-4xl bg-white rounded-md">
             <input
               value={answer}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setAnswer(e.currentTarget.value);
               }}
-              className="w-full h-30 border-b-2 p-3 border-purple-600 focus:border-pink-500 outline-none"
+              className="w-full h-30 border-b-2 p-3 border-purple-600 focus:border-pink-500 outline-none m-3 xs:p-4"
               placeholder="Digite sua resposta aqui"
               type="number"
             />
             <button
               className="
-                        bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 
+                        bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 m-3
                       hover:from-indigo-800 hover:via-ping-500 px-5 rounded-lg 
                       text-white ml-8
               "
