@@ -22,7 +22,7 @@ const Rooms = () => {
       animate-gradient-xy
     "
     >
-      <div className="w-full max-w-4xl bg-white m-5 p-10 rounded-md">
+      <div className="w-full max-w-4xl bg-white m-5 p-10 sm:p-5 rounded-md">
         <CreateRooms />
         <RoomAll rooms={allRooms} />
       </div>

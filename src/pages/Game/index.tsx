@@ -120,8 +120,8 @@ const Game = () => {
             </p>
           </div>
         </div>
-        <div className="mt-12 flex flex-col justify-center items-center">
-          <div className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 rounded-md">
+        <div className="mt-12 flex flex-col justify-center items-center xs:mx-5">
+          <div className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 xs:p-4 rounded-md">
             <input
               value={answer}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {

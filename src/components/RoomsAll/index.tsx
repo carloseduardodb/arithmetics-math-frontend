@@ -32,7 +32,7 @@ const RoomAll: React.FC<any> = ({ rooms = "" }) => {
       <h2 className="pt-7 pb-4 text-gray-800 font-bold text-2xl">
         Salas ativas:
       </h2>
-      <ul className="grid grid-flow-row grid-cols-2 gap-4 w-full">
+      <ul className="grid grid-flow-row sm:grid-cols-2 xs:grid-cols-1 gap-4 w-full">
         {allRooms.map((room) => {
           return (
             room.room_client === "" && (

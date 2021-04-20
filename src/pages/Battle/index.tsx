@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "../../service/socket";
+import { GoArrowDown, GoArrowUp } from "react-icons/go";
 
 interface BattleData {
   operator: string;
@@ -15,6 +16,7 @@ interface Ranking {
 const Battle = () => {
   const [globalGameValues, setGlobalGameValues] = useState<BattleData>();
   const [globalRankingValues, setGlobalRankingValues] = useState<Ranking[]>([]);
+  const [pontuation, setPontuation] = useState(false);
   const [answer, setAnswer] = useState("");
 
   function operationConvert(operator: string | any) {
@@ -27,6 +29,7 @@ const Battle = () => {
         return "erro";
     }
   }
+
   useEffect(() => {
     socket.emit("getBattle", () => {});
     socket.on("battle", (data) => {
@@ -42,7 +45,7 @@ const Battle = () => {
   useEffect(() => {
     socket.emit("getRanking", () => {});
     socket.on("ranking", (data) => {
-      setGlobalRankingValues(data);
+      setGlobalRankingValues(data.reverse());
     });
   }, []);
 
@@ -56,7 +59,7 @@ const Battle = () => {
     setAnswer("");
     socket.emit("getRanking", () => {});
     socket.on("ranking", (data) => {
-      setGlobalRankingValues(data);
+      setGlobalRankingValues(data.reverse());
     });
   }
 
@@ -69,19 +72,42 @@ const Battle = () => {
       animate-gradient-xy relative
     "
     >
-      <div className="flex flex-col justify-center items-center bg-white absolute right-0 p-5 w-full max-w-sm rounded-md overflow-y-scroll m-2">
-        <p className="text-indigo-600 font-bold text-lg">Últimas pontuações</p>
-        <ul style={{ maxHeight: "50vh" }} className="w-full">
-          {globalRankingValues.map((node, index) => (
-            <li
-              key={index}
-              className="flex flex-row justify-between py-2 px-4 bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 rounded-md text-white my-3 shadow-2xl"
-            >
-              <p>{node.name}</p>
-              <p>{node.points}</p>
-            </li>
-          ))}
-        </ul>
+      <div className="flex flex-col justify-center items-center bg-white sm:relative md:absolute right-0 p-5 w-full max-w-sm rounded-md overflow-y-scroll m-2">
+        <button
+          onClick={() => {
+            setPontuation(!pontuation);
+          }}
+          className={
+            "bg-gray-800 flex flex-row-reverse " +
+            (pontuation && "xs:mt-14 md:mt-0") +
+            " hover:bg-black transition-all text-white font-bold py-3 px-4 rounded shadow-lg text-center"
+          }
+        >
+          {pontuation ? (
+            <GoArrowUp className="ml-2" size={25} />
+          ) : (
+            <GoArrowDown className="ml-2" size={25} />
+          )}
+          <p> {pontuation ? "Ocultar Pontuações" : "Exibir Pontuações"} </p>
+        </button>
+        {pontuation && (
+          <p className="text-indigo-600 font-bold text-lg mt-3">
+            Últimas pontuações
+          </p>
+        )}
+        {pontuation && (
+          <ul style={{ maxHeight: "50vh" }} className="w-full">
+            {globalRankingValues.map((node, index) => (
+              <li
+                key={index}
+                className="flex flex-row justify-between py-2 px-4 bg-gradient-to-br from-pink-500 via-indigo-500 to-indigo-800 rounded-md text-white my-3 shadow-2xl"
+              >
+                <p>{node.name}</p>
+                <p>{node.points}</p>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className="w-full h-full flex flex-col justify-around">
         <div className="mt-12 flex flex-col justify-center items-center">
@@ -96,8 +122,8 @@ const Battle = () => {
             </p>
           </div>
         </div>
-        <div className="mt-12 flex flex-col justify-center items-center">
-          <div className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 rounded-md">
+        <div className="mt-12 flex flex-col justify-center items-center xs:mx-5">
+          <div className="w-full flex flex-row max-w-4xl bg-white m-5 p-8 xs:p-4 rounded-md">
             <input
               value={answer}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
