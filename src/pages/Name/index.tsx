@@ -10,8 +10,7 @@ const Name = () => {
     socket.emit("createUser", { name: name });
     socket.on("battle-" + socket.id, (data) => {
       if (data.status) {
-        history.push("battle");
-        socket.off();
+        history.push("battle", { from: "name" });
       }
     });
   }
@@ -27,7 +26,7 @@ const Name = () => {
     >
       <div className="flex flex-col space-y-3 md:w-4/12 sm:w-auto">
         <h2 className="lg:text-5xl md:text-3xl text-center font-bold text-white my-16">
-          Digite seu nome para entra na batalha!
+          Digite seu nome para entrar na batalha!
         </h2>
         <input
           type="text"

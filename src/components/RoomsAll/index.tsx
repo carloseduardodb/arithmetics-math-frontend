@@ -24,7 +24,7 @@ const RoomAll: React.FC<any> = ({ rooms = "" }) => {
 
   function enterRoom(id: number) {
     socket.emit("enterRoom", { id: id });
-    history.push("game");
+    history.push("game", { from: "room" });
   }
 
   return (

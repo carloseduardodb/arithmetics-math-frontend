@@ -1,15 +1,25 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { socket } from "../../service/socket";
+
+interface Props {
+  from: string | any;
+}
 
 const Check = () => {
   const history = useHistory();
+  const { state } = useLocation<Props>();
+  try {
+    state.from !== "create-room" && history.push("duel");
+  } catch {
+    history.push("duel");
+  }
   useEffect(() => {
     try {
       socket.on("room", (data) => {
         const room = JSON.parse(JSON.stringify(data));
         if (room.room_client !== "") {
-          history.push("game");
+          history.push("game", { from: "check" });
         }
       });
     } catch (error) {

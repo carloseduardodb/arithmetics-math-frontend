@@ -8,7 +8,7 @@ const CreateRooms = () => {
 
   function handleCreateRoom() {
     socket.emit("sendRoom", { name: room });
-    history.push("check");
+    history.push("check", { from: "create-room" });
   }
 
   return (

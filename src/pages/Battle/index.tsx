@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "../../service/socket";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
+import { useHistory, useLocation } from "react-router-dom";
 
 interface BattleData {
   operator: string;
@@ -13,11 +14,24 @@ interface Ranking {
   points: number;
 }
 
+interface Props {
+  from: string | any;
+}
+
 const Battle = () => {
   const [globalGameValues, setGlobalGameValues] = useState<BattleData>();
   const [globalRankingValues, setGlobalRankingValues] = useState<Ranking[]>([]);
   const [pontuation, setPontuation] = useState(false);
   const [answer, setAnswer] = useState("");
+  const history = useHistory();
+
+  const { state } = useLocation<Props>();
+
+  try {
+    state.from !== "name" && history.push("your-name");
+  } catch {
+    history.push("your-name");
+  }
 
   function operationConvert(operator: string | any) {
     switch (operator) {

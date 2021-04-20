@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Status from "../../components/Status";
 import { socket } from "../../service/socket";
 
@@ -13,10 +13,31 @@ interface dataValues {
   point_owner: number;
 }
 
+interface Props {
+  from: string | any;
+}
+
 const Game = () => {
   const [dataGame, setDataGame] = useState<dataValues>();
   const [answer, setAnswer] = useState("");
   const history = useHistory();
+
+  const { state } = useLocation<Props>();
+  useEffect(() => {
+    try {
+      switch (state.from) {
+        case "check":
+          break;
+        case "room":
+          break;
+        default:
+          history.push("duel");
+          break;
+      }
+    } catch {
+      history.push("duel");
+    }
+  }, []);
 
   function operationConvert(operator: string | any) {
     switch (operator) {
@@ -82,11 +103,6 @@ const Game = () => {
           point_client: point_client,
           point_owner: point_owner,
         });
-
-        console.log(room_id);
-        //aqui ta recebendo
-        //setAllRooms(JSON.stringify(data));
-        console.log(game);
       });
     } catch (error) {
       console.log("error");
